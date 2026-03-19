@@ -15,6 +15,10 @@ export default {
         },
         'board-bg': '#e8f5e9',
       },
+      fontFamily: {
+        sans: ['Outfit', 'sans-serif'],
+        mono: ['Inter', 'monospace'],
+      },
     },
   },
   plugins: [],

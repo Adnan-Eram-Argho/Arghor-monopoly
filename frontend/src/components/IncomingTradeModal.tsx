@@ -31,33 +31,33 @@ const IncomingTradeModal: React.FC<IncomingTradeModalProps> = ({ room, tradeOffe
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#1e293b] border border-blue-500 p-6 rounded-2xl w-full max-w-2xl flex flex-col gap-6 text-white shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-         
-         <div className="text-center border-b border-slate-700 pb-4">
-             <h2 className="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase">Incoming Trade!</h2>
-             <p className="text-slate-400 mt-2"><strong>{senderName}</strong> wants to trade with you.</p>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+      <div className="glass-panel p-6 md:p-8 rounded-3xl w-full max-w-2xl flex flex-col gap-6 text-white shadow-[0_0_50px_rgba(59,130,246,0.5)] border border-blue-500/50 relative overflow-hidden">
+         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-black pointer-events-none"></div>
+         <div className="relative z-10 text-center border-b border-white/10 pb-4">
+             <h2 className="text-3xl md:text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Incoming Trade!</h2>
+             <p className="text-slate-300 mt-2 font-medium"><strong>{senderName}</strong> wants to trade with you.</p>
          </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* They offer */}
-            <div className="bg-slate-900/50 p-5 rounded-xl border border-green-700/50">
-               <h3 className="font-black text-green-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2">↓</span> You Receive</h3>
-               <div className="text-2xl font-black text-green-300 mb-4">৳{offer.money}</div>
+            <div className="bg-white/5 p-6 rounded-2xl border border-green-500/30 shadow-inner">
+               <h3 className="font-black text-green-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2 drop-shadow-[0_0_8px_rgba(74,222,128,0.8)]">↓</span> You Receive</h3>
+               <div className="text-3xl font-black text-green-400 mb-6 drop-shadow-md">৳{offer.money}</div>
                <div className="flex flex-wrap gap-2">{renderProps(offer.propertyIds)}</div>
             </div>
 
             {/* They want */}
-            <div className="bg-slate-900/50 p-5 rounded-xl border border-red-700/50">
-               <h3 className="font-black text-red-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2">↑</span> You Give</h3>
-               <div className="text-2xl font-black text-red-300 mb-4">৳{request.money}</div>
+            <div className="bg-white/5 p-6 rounded-2xl border border-red-500/30 shadow-inner">
+               <h3 className="font-black text-red-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2 drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]">↑</span> You Give</h3>
+               <div className="text-3xl font-black text-red-400 mb-6 drop-shadow-md">৳{request.money}</div>
                <div className="flex flex-wrap gap-2">{renderProps(request.propertyIds)}</div>
             </div>
          </div>
 
-         <div className="flex justify-end gap-4 mt-2">
-            <button onClick={() => handleResponse(false)} className="px-6 py-3 bg-red-900/80 hover:bg-red-800 text-red-100 rounded-xl font-bold uppercase tracking-widest transition-colors flex-1 shadow-[0_4px_14px_0_rgba(220,38,38,0.39)]">Reject</button>
-            <button onClick={() => handleResponse(true)} className="px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-xl font-black uppercase tracking-widest shadow-[0_4px_14px_0_rgba(34,197,94,0.39)] hover:scale-105 transition-transform flex-1">Accept</button>
+         <div className="relative z-10 flex justify-end gap-4 mt-4">
+            <button onClick={() => handleResponse(false)} className="px-6 py-4 bg-red-900/80 hover:bg-red-800 border border-red-500/50 text-red-100 rounded-xl font-bold uppercase tracking-widest transition-colors flex-1 shadow-[0_4px_14px_rgba(220,38,38,0.4)]">Reject</button>
+            <button onClick={() => handleResponse(true)} className="glow-btn-green px-6 py-4 text-white rounded-xl font-black uppercase tracking-widest shadow-lg flex-1">Accept Trade</button>
          </div>
       </div>
     </div>

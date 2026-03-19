@@ -51,43 +51,43 @@ const TradeModal: React.FC<TradeModalProps> = ({ room, player, onClose, socket }
   if (!targetPlayer) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-[#1e293b] border border-slate-600 p-6 rounded-2xl w-full max-w-4xl flex flex-col gap-6 text-white shadow-2xl">
-         
-         <div className="flex justify-between items-center border-b border-slate-700 pb-4">
-             <h2 className="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase">Trade Center</h2>
-             <select value={targetId} onChange={e => setTargetId(e.target.value)} className="bg-slate-800 border border-slate-600 text-white p-2 rounded-lg outline-none font-bold">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+      <div className="glass-panel p-6 md:p-8 rounded-3xl w-full max-w-4xl flex flex-col gap-6 text-white shadow-[0_30px_60px_rgba(0,0,0,0.8)] border border-white/10 relative overflow-hidden">
+         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20 pointer-events-none"></div>
+         <div className="relative z-10 flex justify-between items-center border-b border-white/10 pb-4">
+             <h2 className="text-3xl md:text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">Trade Center</h2>
+             <select value={targetId} onChange={e => setTargetId(e.target.value)} className="modern-input px-4 py-2 rounded-xl outline-none font-bold text-sm md:text-base">
                  {otherPlayers.map(p => <option key={p.id} value={p.id}>Trade with {p.name}</option>)}
              </select>
          </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* My Offer */}
-            <div className="bg-slate-900/50 p-5 rounded-xl border border-slate-700/50">
-               <h3 className="font-black text-green-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2">↑</span> You Offer</h3>
+            <div className="bg-white/5 p-5 md:p-6 rounded-2xl border border-white/10 shadow-inner">
+               <h3 className="font-black text-green-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2 drop-shadow-[0_0_8px_rgba(74,222,128,0.8)]">↑</span> You Offer</h3>
                <label className="block text-xs uppercase tracking-widest text-slate-400 mb-2">Money (৳)</label>
                <input type="number" max={player.money} min={0} value={offerMoney} onChange={e=>setOfferMoney(Number(e.target.value))} 
-                      className="w-full bg-slate-800 border border-slate-600 p-3 rounded-lg mb-6 font-bold text-green-300 outline-none focus:border-green-500" />
+                      className="modern-input w-full p-4 rounded-xl mb-6 font-bold text-green-400 text-lg outline-none" />
                
                <label className="block text-xs uppercase tracking-widest text-slate-400 mb-2">Properties ({offerProps.length} selected)</label>
                <div className="flex flex-wrap gap-2">{renderProps(player, offerProps, setOfferProps)}</div>
             </div>
 
             {/* Theirs */}
-            <div className="bg-slate-900/50 p-4 md:p-5 rounded-xl border border-slate-700/50">
-               <h3 className="font-black text-red-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2">↓</span> You Request</h3>
+            <div className="bg-white/5 p-5 md:p-6 rounded-2xl border border-white/10 shadow-inner">
+               <h3 className="font-black text-red-400 tracking-widest uppercase mb-4 flex items-center"><span className="text-xl mr-2 drop-shadow-[0_0_8px_rgba(248,113,113,0.8)]">↓</span> You Request</h3>
                <label className="block text-xs uppercase tracking-widest text-slate-400 mb-2">Money (৳)</label>
                <input type="number" max={targetPlayer.money} min={0} value={reqMoney} onChange={e=>setReqMoney(Number(e.target.value))} 
-                      className="w-full bg-slate-800 border border-slate-600 p-3 rounded-lg mb-6 font-bold text-red-300 outline-none focus:border-red-500" />
+                      className="modern-input w-full p-4 rounded-xl mb-6 font-bold text-red-400 text-lg outline-none" />
                
                <label className="block text-xs uppercase tracking-widest text-slate-400 mb-2">Properties ({reqProps.length} selected)</label>
                <div className="flex flex-wrap gap-2">{renderProps(targetPlayer, reqProps, setReqProps)}</div>
             </div>
          </div>
 
-         <div className="flex justify-end gap-4 mt-2">
-            <button onClick={onClose} className="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold uppercase tracking-widest transition-colors">Cancel</button>
-            <button onClick={handleSend} className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-black uppercase tracking-widest shadow-lg hover:scale-105 transition-transform">Send Proposal</button>
+         <div className="relative z-10 flex justify-end gap-4 mt-2">
+            <button onClick={onClose} className="px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl font-bold uppercase tracking-widest transition-colors shadow-lg">Cancel</button>
+            <button onClick={handleSend} className="glow-btn-blue px-8 py-3 text-white rounded-xl font-black uppercase tracking-widest shadow-lg transition-transform">Send Proposal</button>
          </div>
       </div>
     </div>

@@ -17,8 +17,8 @@ const Board: React.FC<BoardProps> = ({ room, onTileClick }) => {
   };
 
   return (
-    <div className="w-full max-w-[900px] aspect-square bg-[#0d1321] p-1.5 md:p-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-[6px] border-[#080808] rounded-lg">
-      <div className="board-grid gap-0.5 w-full h-full bg-[#080808]">
+    <div className="w-full max-w-[900px] aspect-square bg-[#0a0a0a] p-1.5 md:p-3 shadow-[0_20px_60px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(255,255,255,0.05)] border-[8px] md:border-[12px] border-[#111] rounded-xl relative transform-gpu md:hover:rotate-1 transition-transform duration-700">
+      <div className="board-grid gap-0.5 w-full h-full bg-[#050505] shadow-inner">
         
         {/* Render Tiles 0-39 */}
         {room.board.map((tile: TileType) => {
@@ -38,18 +38,20 @@ const Board: React.FC<BoardProps> = ({ room, onTileClick }) => {
         {/* Center Space (Logo / Controls) */}
         <div 
           style={{ gridRow: '2 / 11', gridColumn: '2 / 11' }}
-          className="bg-gradient-to-br from-[#05402f] to-[#7f1d1d] border-[3px] md:border-[6px] border-yellow-500/80 rounded-2xl md:rounded-3xl m-2 md:m-4 flex flex-col items-center justify-center p-2 md:p-6 text-center shadow-[inset_0_0_80px_rgba(0,0,0,0.9)] relative overflow-hidden"
+          className="bg-[#0f172a] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900/40 via-[#0f172a] to-black border-2 border-slate-800 shadow-[inset_0_0_60px_rgba(0,0,0,0.8)] rounded-3xl m-3 md:m-5 flex flex-col items-center justify-center p-4 md:p-8 text-center relative overflow-hidden"
         >
              {/* Huge Banner Background Text */}
-             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
-                <span className="text-[12rem] md:text-[24rem] font-black tracking-tighter text-white rotate-[-45deg] select-none">🇧🇩</span>
+             <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
+                <span className="text-[12rem] md:text-[24rem] font-black tracking-tighter text-white rotate-[-25deg] select-none blur-sm">🇧🇩</span>
              </div>
 
-             <h1 className="text-2xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 drop-shadow-[0_5px_5px_rgba(0,0,0,1)] uppercase tracking-widest z-10 pb-2">
-               Bangladesh<br className="hidden md:block"/><span className="md:hidden"> </span>Monopoly
-             </h1>
-             
-             <p className="text-gray-300 font-mono text-[10px] md:text-sm mb-2 md:mb-4 tracking-widest z-10 bg-black/50 px-3 py-1 rounded-full border border-white/10 uppercase">Room: <span className="text-yellow-400 font-bold ml-1">{room.id}</span></p>
+             <div className="glass-panel px-6 py-4 md:px-10 md:py-8 rounded-3xl flex flex-col items-center border border-white/5 shadow-2xl z-10 w-full max-w-[80%]">
+               <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-[0_5px_15px_rgba(234,179,8,0.2)] uppercase tracking-[0.2em] leading-tight mb-2 md:mb-4">
+                 Bangladesh<br className="hidden md:block"/><span className="md:hidden"> </span>Monopoly
+               </h1>
+               
+               <p className="text-gray-300 font-mono text-[10px] md:text-xs tracking-widest bg-black/60 px-4 py-1.5 rounded-full border border-white/10 uppercase shadow-inner">Room Code: <span className="text-yellow-400 font-bold ml-1 text-sm md:text-base">{room.id}</span></p>
+             </div>
 
              {/* Animated Action Banner */}
              {room.logs.length > 0 && (

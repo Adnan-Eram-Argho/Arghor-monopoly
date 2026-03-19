@@ -70,18 +70,18 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
                       tile.type === 'PUBLIC_FUND' ? <span className={`text-lg md:text-2xl my-1 flex items-center justify-center ${orientation === 'LEFT' || orientation === 'RIGHT' ? 'rotate-90' : ''}`}>🎁</span> : null;
 
   return (
-    <div className={`relative w-full h-full border border-[#080808] ${bgColor} group transition-all duration-300 hover:z-50 hover:scale-125 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]`}>
+    <div className={`relative w-full h-full border border-[#1a1a1a] ${bgColor} group transition-all duration-300 hover:z-50 hover:scale-[1.2] hover:shadow-[0_30px_60px_rgba(0,0,0,0.9),inset_0_0_15px_rgba(255,255,255,0.4)] shadow-[inset_0_0_10px_rgba(0,0,0,0.2)]`}>
       <div className={`absolute inset-0 ${layoutClass} ${innerTransform}`}>
         
         {tile.type === 'PROPERTY' && (
-          <div className={`${barClass} shadow-sm relative flex items-center justify-center`} style={{ backgroundColor: tile.color }}>
+          <div className={`${barClass} shadow-[0_2px_5px_rgba(0,0,0,0.3),inset_0_2px_5px_rgba(255,255,255,0.5)] relative flex items-center justify-center border-b border-black/20`} style={{ backgroundColor: tile.color }}>
             {tile.houses !== undefined && tile.houses > 0 && (
-              <div className={`absolute flex ${orientation === 'LEFT' || orientation === 'RIGHT' ? 'flex-col' : 'flex-row'} items-center justify-center gap-[1px] md:gap-1`}>
+              <div className={`absolute flex ${orientation === 'LEFT' || orientation === 'RIGHT' ? 'flex-col' : 'flex-row'} items-center justify-center gap-[1px] md:gap-1 z-10`}>
                 {tile.houses === 5 ? (
-                  <div className="w-2 h-2 md:w-3 md:h-3 bg-red-600 shadow-[0_2px_4px_rgba(0,0,0,0.5)] border border-black" title="Hotel" />
+                  <div className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-red-600 shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_2px_rgba(255,255,255,0.4)] border border-black rounded-sm" title="Hotel" />
                 ) : (
                   Array.from({ length: tile.houses }).map((_, i) => (
-                     <div key={i} className="w-1.5 h-1.5 md:w-2 md:h-2 bg-green-500 shadow-[0_2px_4px_rgba(0,0,0,0.5)] border border-black" title="House" />
+                     <div key={i} className="w-2 h-2 md:w-2.5 md:h-2.5 bg-green-500 shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_2px_rgba(255,255,255,0.4)] border border-black rounded-[1px]" title="House" />
                   ))
                 )}
               </div>
@@ -90,8 +90,8 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
         )}
 
         {isMortgaged && (
-          <div className="absolute inset-0 bg-red-900/40 z-20 flex items-center justify-center backdrop-blur-[1px]">
-             <span className={`text-red-500 font-black text-[0.6rem] md:text-xs tracking-widest uppercase border-y-2 border-red-500 bg-black/80 px-1 py-0.5 ${orientation === 'LEFT' ? 'rotate-90' : orientation === 'RIGHT' ? '-rotate-90' : ''}`}>MORTGAGED</span>
+          <div className="absolute inset-0 bg-red-900/60 z-20 flex items-center justify-center backdrop-blur-[2px]">
+             <span className={`text-red-400 font-black text-[0.6rem] md:text-xs tracking-widest uppercase border-y-2 border-red-500 bg-black/95 px-2 py-1 shadow-[0_0_20px_rgba(220,38,38,0.8)] ${orientation === 'LEFT' ? 'rotate-90' : orientation === 'RIGHT' ? '-rotate-90' : ''}`}>MORTGAGED</span>
           </div>
         )}
 
@@ -122,11 +122,11 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
       </div>
 
       {/* Players */}
-      <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-1 p-1 pointer-events-none z-10">
+      <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-[2px] md:gap-1.5 p-1 pointer-events-none z-30">
         {playersHere.map(p => (
           <div 
             key={p.id} 
-            className="w-3 h-3 md:w-5 md:h-5 rounded-full border-2 border-white shadow-[0_2px_4px_rgba(0,0,0,0.5)] transform hover:scale-110 transition-transform"
+            className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full border-[1.5px] border-white/90 shadow-[0_4px_8px_rgba(0,0,0,0.8),inset_0_2px_4px_rgba(255,255,255,0.6)] transform hover:scale-125 transition-transform"
             style={{ backgroundColor: getPlayerColor(p.id) }}
             title={p.name}
           />
