@@ -25,7 +25,7 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
   let layoutClass = 'flex flex-col';
   let barClass = 'h-1/4 w-full border-b-2 border-[#090909]';
   let textContainerClass = 'flex-1 flex flex-col items-center justify-center p-0.5 md:p-1 overflow-hidden w-full h-full';
-  let titleClass = 'text-[8px] md:text-[10px] leading-tight font-black text-center uppercase text-slate-900 w-full px-0.5 break-words';
+  let titleClass = 'text-[8px] md:text-[10px] leading-tight font-black text-center uppercase text-slate-900 w-full px-0.5 break-words whitespace-pre-line';
   let priceClass = 'text-[8px] md:text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap';
   let innerTransform = '';
 
