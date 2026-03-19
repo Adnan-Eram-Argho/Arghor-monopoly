@@ -101,3 +101,13 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
 }
+
+/* Token Drop Animation */
+@keyframes tokenDrop {
+  0% { transform: translateY(-40px) scale(1.5); opacity: 0; box-shadow: 0 20px 20px rgba(0,0,0,0.5); }
+  50% { transform: translateY(5px) scale(0.9); opacity: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+  100% { transform: translateY(0) scale(1); box-shadow: 0 4px 8px rgba(0,0,0,0.8); }
+}
+.animate-token-drop {
+  animation: tokenDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}

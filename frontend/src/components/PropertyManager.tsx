@@ -29,17 +29,47 @@ const PropertyManager: React.FC<PropertyManagerProps> = ({ tile, room, player, o
         <p className="relative z-10 text-white/50 text-xs mb-6 uppercase tracking-[0.2em] font-medium">{tile.group} | {tile.type}</p>
         
         <div className="relative z-10 space-y-2.5 mb-8 text-sm bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner">
-           <div className="flex justify-between font-black text-green-400 text-base border-b border-white/10 pb-2 mb-2"><span>Base Rent</span> <span>৳{tile.rent}</span></div>
-           {tile.rentLevels && tile.rentLevels.map((r, i) => (
-             <div key={i} className="flex justify-between text-slate-300 font-medium">
-               <span>{i === 4 ? 'Hotel' : `${i + 1} House${i !== 0 ? 's' : ''}`} Rent</span>
-               <span className="font-bold">৳{r}</span>
-             </div>
-           ))}
-           {tile.houseCost && (
-             <div className="flex justify-between mt-3 pt-3 border-t border-white/10 text-yellow-400 font-bold"><span>House Cost</span> <span>৳{tile.houseCost}</span></div>
+           {tile.type === 'PROPERTY' && (
+             <>
+               <div className="flex justify-between font-black text-green-400 text-base border-b border-white/10 pb-2 mb-2"><span>Base Rent</span> <span>৳{tile.rent}</span></div>
+               {tile.rentLevels && tile.rentLevels.map((r, i) => (
+                 <div key={i} className="flex justify-between text-slate-300 font-medium">
+                   <span>{i === 4 ? 'Hotel' : `${i + 1} House${i !== 0 ? 's' : ''}`} Rent</span>
+                   <span className="font-bold">৳{r}</span>
+                 </div>
+               ))}
+               {tile.houseCost && (
+                 <div className="flex justify-between mt-3 pt-3 border-t border-white/10 text-yellow-400 font-bold"><span>House Cost</span> <span>৳{tile.houseCost}</span></div>
+               )}
+             </>
            )}
-           <div className="flex justify-between text-red-400 font-bold mt-1"><span>Mortgage Value</span> <span>৳{Math.floor((tile.price||0)/2)}</span></div>
+
+           {tile.type === 'STATION' && (
+             <>
+               <div className="flex justify-between font-black text-green-400 text-base border-b border-white/10 pb-2 mb-2"><span>Rent (1 Station)</span> <span>৳500</span></div>
+               <div className="flex justify-between text-slate-300 font-medium"><span>Rent (2 Stations)</span> <span className="font-bold">৳1,000</span></div>
+               <div className="flex justify-between text-slate-300 font-medium"><span>Rent (3 Stations)</span> <span className="font-bold">৳2,000</span></div>
+               <div className="flex justify-between text-slate-300 font-medium"><span>Rent (4 Stations)</span> <span className="font-bold">৳4,000</span></div>
+             </>
+           )}
+
+           {tile.type === 'UTILITY' && (
+             <>
+               <div className="border-b border-white/10 pb-2 mb-2">
+                 <span className="font-black text-green-400 text-base">Utility Rent</span>
+               </div>
+               <div className="flex justify-between text-slate-300 font-medium mb-1">
+                 <span>If 1 Utility is owned</span>
+                 <span className="font-bold">4x Dice Roll</span>
+               </div>
+               <div className="flex justify-between text-slate-300 font-medium">
+                 <span>If 2 Utilities are owned</span>
+                 <span className="font-bold">10x Dice Roll</span>
+               </div>
+             </>
+           )}
+
+           <div className="flex justify-between text-red-400 font-bold mt-4 pt-3 border-t border-white/10"><span>Mortgage Value</span> <span>৳{Math.floor((tile.price||0)/2)}</span></div>
         </div>
 
         <div className="relative z-10">

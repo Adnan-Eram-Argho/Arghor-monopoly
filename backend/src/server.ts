@@ -232,7 +232,7 @@ io.on("connection", (socket: Socket) => {
   socket.on('create_room', (playerName: string) => {
     const roomId = generateRoomCode();
     const hostPlayer: Player = {
-      id: socket.id, name: playerName, position: 0, money: 15000,
+      id: socket.id, name: playerName, position: 0, money: 20000,
       properties: [], inJail: false, jailTurns: 0, consecutiveDoubles: 0, isBankrupt: false, getOutOfJailCards: 0
     };
     const newRoom: RoomState = {
@@ -254,7 +254,7 @@ io.on("connection", (socket: Socket) => {
     if (room.players.length >= 4) return socket.emit('error_message', 'Room is full.');
 
     const newPlayer: Player = {
-      id: socket.id, name: data.playerName, position: 0, money: 15000,
+      id: socket.id, name: data.playerName, position: 0, money: 20000,
       properties: [], inJail: false, jailTurns: 0, consecutiveDoubles: 0, isBankrupt: false, getOutOfJailCards: 0
     };
     room.players.push(newPlayer);
@@ -360,10 +360,84 @@ io.on("connection", (socket: Socket) => {
       player.money -= tile.price || 0;
       tile.owner = player.id;
       player.properties.push(tile.id);
-      room.logs.push(`${player.name} bought ${tile.name} for $${tile.price}`);
+      room.logs.push(`${player.name} bought ${tile.name} for ৳${tile.price}`);
       io.to(roomId).emit('game_update', room);
     } else {
       socket.emit('error_message', 'Not enough money!');
+    }
+  });
+
+  // --- PROPERTY MANAGEMENT ---
+  socket.on('build_house', (data: { roomId: string; tileId: number }) => {
+    const room = rooms.get(data.roomId);
+    if (!room) return;
+    const player = room.players.find(p => p.id === socket.id);
+    const tile = room.board[data.tileId];
+    if (!player || !tile || tile.owner !== player.id || tile.isMortgaged || tile.type !== 'PROPERTY') return;
+
+    // Must own all properties in group
+    const groupTiles = room.board.filter(t => t.group === tile.group);
+    const ownsAll = groupTiles.every(t => t.owner === player.id && !t.isMortgaged);
+    if (!ownsAll) return socket.emit('error_message', 'You must own all unmortgaged properties in this group.');
+
+    if ((tile.houses || 0) < 5 && player.money >= (tile.houseCost || 0)) {
+      player.money -= (tile.houseCost || 0);
+      tile.houses = (tile.houses || 0) + 1;
+      room.logs.push(`${player.name} built a ${tile.houses === 5 ? 'Hotel' : 'House'} on ${tile.name} for ৳${tile.houseCost}.`);
+      io.to(data.roomId).emit('game_update', room);
+    }
+  });
+
+  socket.on('sell_house', (data: { roomId: string; tileId: number }) => {
+    const room = rooms.get(data.roomId);
+    if (!room) return;
+    const player = room.players.find(p => p.id === socket.id);
+    const tile = room.board[data.tileId];
+    if (!player || !tile || tile.owner !== player.id || tile.isMortgaged || tile.type !== 'PROPERTY') return;
+
+    if ((tile.houses || 0) > 0) {
+      const sellValue = Math.floor((tile.houseCost || 0) / 2);
+      player.money += sellValue;
+      tile.houses = (tile.houses || 0) - 1;
+      room.logs.push(`${player.name} sold a building on ${tile.name} for ৳${sellValue}.`);
+      io.to(data.roomId).emit('game_update', room);
+    }
+  });
+
+  socket.on('mortgage_property', (data: { roomId: string; tileId: number }) => {
+    const room = rooms.get(data.roomId);
+    if (!room) return;
+    const player = room.players.find(p => p.id === socket.id);
+    const tile = room.board[data.tileId];
+    if (!player || !tile || tile.owner !== player.id || tile.isMortgaged) return;
+
+    // Check if any property in group has houses
+    const groupTiles = room.board.filter(t => t.group === tile.group);
+    const hasHouses = groupTiles.some(t => t.houses && t.houses > 0);
+    if (hasHouses) return socket.emit('error_message', 'You must sell all houses in this group first.');
+
+    const mortgageValue = Math.floor((tile.price || 0) / 2);
+    player.money += mortgageValue;
+    tile.isMortgaged = true;
+    room.logs.push(`${player.name} mortgaged ${tile.name} for ৳${mortgageValue}.`);
+    io.to(data.roomId).emit('game_update', room);
+  });
+
+  socket.on('unmortgage_property', (data: { roomId: string; tileId: number }) => {
+    const room = rooms.get(data.roomId);
+    if (!room) return;
+    const player = room.players.find(p => p.id === socket.id);
+    const tile = room.board[data.tileId];
+    if (!player || !tile || tile.owner !== player.id || !tile.isMortgaged) return;
+
+    const unmortgageCost = Math.floor((tile.price || 0) / 2) + Math.floor((tile.price || 0) * 0.05);
+    if (player.money >= unmortgageCost) {
+      player.money -= unmortgageCost;
+      tile.isMortgaged = false;
+      room.logs.push(`${player.name} unmortgaged ${tile.name} for ৳${unmortgageCost}.`);
+      io.to(data.roomId).emit('game_update', room);
+    } else {
+      socket.emit('error_message', 'Not enough money to unmortgage!');
     }
   });
 

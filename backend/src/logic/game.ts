@@ -25,13 +25,13 @@ export const calculateRent = (tile: Tile, board: Tile[], steps: number): number 
   if (tile.type === 'UTILITY') {
     // Check if owner owns multiple utilities
     const utilitiesOwned = board.filter(t => t.type === 'UTILITY' && t.owner === tile.owner).length;
-    return utilitiesOwned >= 2 ? steps * 10 : steps * 4;
+    return utilitiesOwned >= 2 ? steps * 10 : steps * 4; // Classic monopoly rules
   }
 
   // Station Logic
   if (tile.type === 'STATION') {
     const stationsOwned = board.filter(t => t.type === 'STATION' && t.owner === tile.owner).length;
-    return 25 * Math.pow(2, stationsOwned - 1); // 25, 50, 100, 200
+    return 500 * Math.pow(2, stationsOwned - 1); // 500, 1000, 2000, 4000
   }
 
   // Property Logic
