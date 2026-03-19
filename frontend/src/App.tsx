@@ -4,6 +4,7 @@ import Board from './components/Board';
 import TradeModal from './components/TradeModal';
 import IncomingTradeModal from './components/IncomingTradeModal';
 import PropertyManager from './components/PropertyManager';
+import { playPop, playDiceRoll, playCash, playNegative, playTurnStart, setMuted } from './utils/soundUtils';
 
 function App() {
   const { room, player, createRoom, joinRoom, startGame, rollDice, buyProperty, endTurn, socket } = useSocket();
@@ -11,6 +12,14 @@ function App() {
   const [roomIdInput, setRoomIdInput] = useState('');
 
   // UI State
+  const [isAudioMuted, setIsAudioMuted] = useState(false);
+  const toggleMute = () => {
+    const next = !isAudioMuted;
+    setIsAudioMuted(next);
+    setMuted(next);
+    if (!next) playPop();
+  };
+
   const [isTradeModalOpen, setIsTradeModalOpen] = useState(false);
   const [incomingTradeOffer, setIncomingTradeOffer] = useState<any>(null);
   const [selectedTileId, setSelectedTileId] = useState<number | null>(null);
@@ -22,6 +31,13 @@ function App() {
     });
     return () => { socket.off('receive_trade_offer'); };
   }, [socket]);
+
+  const isMyTurnGlobal = Boolean(room?.isStarted && player?.id && room.players?.[room.currentTurnIndex]?.id === player.id);
+  useEffect(() => {
+    if (isMyTurnGlobal) {
+      playTurnStart();
+    }
+  }, [isMyTurnGlobal]);
 
   // --- Lobby UI ---
   if (!room) {
@@ -44,7 +60,7 @@ function App() {
             
             <button 
               className="glow-btn-green px-6 py-3 rounded-xl font-bold uppercase tracking-wider text-white w-full" 
-              onClick={() => createRoom(name)}
+              onClick={() => { playPop(); createRoom(name); }}
             >
               Create New Room
             </button>
@@ -64,11 +80,15 @@ function App() {
               />
               <button 
                 className="glow-btn-blue px-6 py-3 rounded-xl font-bold uppercase tracking-wider w-1/2 text-white" 
-                onClick={() => joinRoom(roomIdInput, name)}
+                onClick={() => { playPop(); joinRoom(roomIdInput, name); }}
               >
                 Join Room
               </button>
             </div>
+            
+            <button className="text-white/50 hover:text-white mt-4 mx-auto text-2xl transition-colors" onClick={toggleMute} title="Toggle Audio">
+              {isAudioMuted ? '🔇' : '🔊'}
+            </button>
           </div>
         </div>
       </div>
@@ -99,17 +119,20 @@ function App() {
             </ul>
           </div>
           
-          <div className="mt-10 w-full">
+          <div className="mt-10 w-full flex flex-col items-center gap-4">
             {room.players.length >= 2 ? (
                <button 
                  className="glow-btn-green text-white px-6 py-4 w-full rounded-2xl font-black text-xl uppercase tracking-widest shadow-lg" 
-                 onClick={startGame}
+                 onClick={() => { playPop(); startGame(); }}
                >
                  START GAME
                </button>
             ) : (
                <p className="text-yellow-500/80 font-medium italic animate-pulse">Waiting for more players to join...</p>
             )}
+            <button className="text-white/50 hover:text-white text-2xl transition-colors" onClick={toggleMute} title="Toggle Audio">
+              {isAudioMuted ? '🔇' : '🔊'}
+            </button>
           </div>
         </div>
       </div>
@@ -145,7 +168,12 @@ function App() {
           <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent pointer-events-none"></div>
           <div>
              <h2 className="font-bold text-white/50 uppercase tracking-widest text-xs mb-1">Current Turn</h2>
-             <div className="text-2xl font-black text-yellow-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">{currentPlayer.name}</div>
+             <div className="text-2xl font-black text-yellow-400 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] flex items-center gap-2">
+                {currentPlayer.name}
+                <button className="text-white/50 hover:text-white text-base ml-2 transition-colors cursor-pointer" onClick={toggleMute} title="Toggle Audio">
+                  {isAudioMuted ? '🔇' : '🔊'}
+                </button>
+             </div>
           </div>
           {isMyTurn && <span className="text-xs bg-red-600 border border-red-500 text-white px-3 py-1.5 rounded-lg font-bold animate-pulse shadow-[0_0_15px_rgba(220,38,38,0.6)]">YOUR TURN</span>}
         </div>
@@ -164,17 +192,23 @@ function App() {
         {isMyTurn && (
           <div className="bg-black/30 border border-white/5 p-5 rounded-2xl flex flex-col gap-4 shadow-inner">
             {!room.hasRolled && (
-              <button onClick={rollDice} className="glow-btn-blue text-white px-6 py-4 rounded-xl font-bold w-full text-xl shadow-lg uppercase tracking-wider flex items-center justify-center gap-3">
+              <button 
+                 onClick={() => { playDiceRoll(); rollDice(); }} 
+                 className="glow-btn-blue text-white px-6 py-4 rounded-xl font-bold w-full text-xl shadow-lg uppercase tracking-wider flex items-center justify-center gap-3">
                 <span className="text-2xl">🎲</span> ROLL DICE
               </button>
             )}
             {canBuy && (
-              <button onClick={buyProperty} className="glow-btn-green text-white px-6 py-4 rounded-xl font-bold w-full uppercase tracking-wider flex items-center justify-center gap-3 shadow-lg">
+              <button 
+                 onClick={() => { playCash(); buyProperty(); }} 
+                 className="glow-btn-green text-white px-6 py-4 rounded-xl font-bold w-full uppercase tracking-wider flex items-center justify-center gap-3 shadow-lg">
                 <span className="text-xl">🏠</span> BUY ৳{currentTile.price}
               </button>
             )}
             {room.hasRolled && (
-              <button onClick={endTurn} className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-4 rounded-xl font-bold w-full transition-all shadow-lg uppercase tracking-wider flex items-center justify-center gap-2">
+              <button 
+                 onClick={() => { playPop(); endTurn(); }} 
+                 className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-4 rounded-xl font-bold w-full transition-all shadow-lg uppercase tracking-wider flex items-center justify-center gap-2">
                 END TURN ➡️
               </button>
             )}
@@ -198,13 +232,14 @@ function App() {
         
         {/* Quick Actions */}
         <div className="flex gap-4">
-             <button onClick={() => setIsTradeModalOpen(true)} className="flex-1 text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+             <button onClick={() => { playPop(); setIsTradeModalOpen(true); }} className="flex-1 text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
                 <span>🤝</span> Trade
              </button>
              <button onClick={() => {
                 if (window.confirm("Are you sure you want to declare bankruptcy? This will eliminate you from the game!")) {
+                   playNegative();
                    socket?.emit('declare_bankruptcy', room.id);
-                }
+                } else playPop();
              }} className="flex-1 text-sm bg-red-900/50 hover:bg-red-800 border border-red-800/50 hover:border-red-500 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg text-red-100 flex items-center justify-center gap-2">
                 <span>☠️</span> Give Up
              </button>
