@@ -5,7 +5,7 @@
 @layer utilities {
   .board-grid {
     display: grid;
-    /* Proper Monopoly proportions: corners 1.5x edges */
+    /* Increased edge thickness from 1.54fr to 2.5fr to make tiles larger and shrink center box */
     grid-template-columns: 1.54fr repeat(9, 1fr) 1.54fr;
     grid-template-rows: 1.54fr repeat(9, 1fr) 1.54fr;
     aspect-ratio: 1 / 1;
@@ -17,15 +17,19 @@
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: rgba(15, 23, 42, 0.5);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(250, 204, 21, 0.5); /* Yellow to match theme */
+  background-color: rgba(250, 204, 21, 0.5);
+  /* Yellow to match theme */
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(234, 179, 8, 0.8);
 }
@@ -53,9 +57,17 @@ body {
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Glassmorphism Panel */
@@ -74,6 +86,7 @@ body {
   color: white;
   transition: all 0.3s ease;
 }
+
 .modern-input:focus {
   outline: none;
   border-color: rgba(250, 204, 21, 0.5);
@@ -87,6 +100,7 @@ body {
   box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
   transition: all 0.2s ease;
 }
+
 .glow-btn-green:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6);
@@ -97,6 +111,7 @@ body {
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
   transition: all 0.2s ease;
 }
+
 .glow-btn-blue:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
@@ -104,10 +119,24 @@ body {
 
 /* Token Drop Animation */
 @keyframes tokenDrop {
-  0% { transform: translateY(-40px) scale(1.5); opacity: 0; box-shadow: 0 20px 20px rgba(0,0,0,0.5); }
-  50% { transform: translateY(5px) scale(0.9); opacity: 1; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-  100% { transform: translateY(0) scale(1); box-shadow: 0 4px 8px rgba(0,0,0,0.8); }
+  0% {
+    transform: translateY(-40px) scale(1.5);
+    opacity: 0;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  50% {
+    transform: translateY(5px) scale(0.9);
+    opacity: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+  }
 }
+
 .animate-token-drop {
   animation: tokenDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
