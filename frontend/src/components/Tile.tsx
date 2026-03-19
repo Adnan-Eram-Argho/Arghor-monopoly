@@ -24,9 +24,9 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
   
   let layoutClass = 'flex flex-col';
   let barClass = 'h-1/4 w-full border-b-2 border-[#090909]';
-  let textContainerClass = 'flex-1 flex flex-col items-center justify-center p-0.5 md:p-1 overflow-hidden w-full h-full';
-  let titleClass = 'text-[8px] md:text-[10px] leading-tight font-black text-center uppercase text-slate-900 w-full px-0.5 break-words whitespace-pre-line';
-  let priceClass = 'text-[8px] md:text-[10px] font-bold text-slate-700 mt-0.5 whitespace-nowrap';
+  let textContainerClass = 'flex-1 flex flex-col items-center justify-center overflow-hidden w-full h-full p-0.5';
+  let titleClass = 'text-[7px] md:text-[9px] leading-tight font-black text-center uppercase text-slate-900 w-full px-0.5 break-words whitespace-pre-line tracking-tighter';
+  let priceClass = 'text-[7px] md:text-[9px] font-bold text-slate-800 mt-[1px] whitespace-nowrap bg-white/50 px-1 rounded-sm shadow-sm';
   let innerTransform = '';
 
   // Helper flags to render Name/Price differently for Left/Right edges
@@ -56,7 +56,7 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere }) => {
     if (tile.id === 10) innerTransform = 'rotate-90';
     if (tile.id === 20) innerTransform = 'rotate-180';
     if (tile.id === 30) innerTransform = '-rotate-90';
-    titleClass = 'text-[9px] md:text-[12px] leading-tight font-black text-center uppercase text-slate-900 px-1 break-words';
+    titleClass = 'text-[8px] md:text-[10px] leading-tight font-black text-center uppercase text-slate-900 px-1 break-words';
     textContainerClass = 'flex-1 flex flex-col items-center justify-center p-1 overflow-hidden w-full h-full';
   } else {
     // BOTTOM

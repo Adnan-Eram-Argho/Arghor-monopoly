@@ -38,18 +38,26 @@ const Board: React.FC<BoardProps> = ({ room, onTileClick }) => {
         {/* Center Space (Logo / Controls) */}
         <div 
           style={{ gridRow: '2 / 11', gridColumn: '2 / 11' }}
-          className="bg-[#121f33] flex flex-col items-center justify-center p-4 rounded-xl shadow-[inset_0_0_100px_rgba(0,0,0,0.5)] m-1 md:m-3"
+          className="bg-gradient-to-br from-[#05402f] to-[#7f1d1d] border-[3px] md:border-[6px] border-yellow-500/80 rounded-2xl md:rounded-3xl m-2 md:m-4 flex flex-col items-center justify-center p-2 md:p-6 text-center shadow-[inset_0_0_80px_rgba(0,0,0,0.9)] relative overflow-hidden"
         >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-yellow-600 text-center mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] uppercase tracking-widest">
-            Dhoni Hobar<br/>Mojar Khela
-          </h1>
-          <p className="text-gray-300 font-mono text-sm md:text-lg mb-8 tracking-widest">ROOM: <span className="text-yellow-400 font-bold">{room.id}</span></p>
-          
-          <div className="mt-4 bg-black/40 backdrop-blur-sm border border-white/10 px-8 py-4 rounded-2xl text-white text-center shadow-xl">
-             <p className="text-xl md:text-2xl font-bold uppercase tracking-widest text-[#4ade80]">
-               Turn: {room.players[room.currentTurnIndex]?.name}
-             </p>
-          </div>
+             {/* Huge Banner Background Text */}
+             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                <span className="text-[12rem] md:text-[24rem] font-black tracking-tighter text-white rotate-[-45deg] select-none">🇧🇩</span>
+             </div>
+
+             <h1 className="text-2xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 drop-shadow-[0_5px_5px_rgba(0,0,0,1)] uppercase tracking-widest z-10 pb-2">
+               Bangladesh<br className="hidden md:block"/><span className="md:hidden"> </span>Monopoly
+             </h1>
+             
+             <p className="text-gray-300 font-mono text-[10px] md:text-sm mb-2 md:mb-4 tracking-widest z-10 bg-black/50 px-3 py-1 rounded-full border border-white/10 uppercase">Room: <span className="text-yellow-400 font-bold ml-1">{room.id}</span></p>
+
+             {/* Animated Action Banner */}
+             {room.logs.length > 0 && (
+                <div key={room.logs[room.logs.length - 1]} className="animate-bounce z-10 bg-black/90 p-3 md:p-5 rounded-xl md:rounded-2xl border-2 border-yellow-500 shadow-[0_0_40px_rgba(234,179,8,0.5)] backdrop-blur-md text-white font-bold text-[10px] md:text-sm lg:text-lg w-[90%] md:max-w-[80%] mx-auto mt-2 md:mt-4 uppercase tracking-wide flex items-center justify-center gap-2">
+                   <span className="text-lg md:text-2xl animate-pulse">📢</span>
+                   <span>{room.logs[room.logs.length - 1]}</span>
+                </div>
+             )}
         </div>
 
       </div>
