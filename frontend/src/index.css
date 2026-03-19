@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .board-grid {
+    display: grid;
+    /* Proper Monopoly proportions: corners 1.5x edges */
+    grid-template-columns: 1.54fr repeat(9, 1fr) 1.54fr;
+    grid-template-rows: 1.54fr repeat(9, 1fr) 1.54fr;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* Custom scrollbar for game panels */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #4caf50;
+  border-radius: 3px;
+}
+
+body {
+  margin: 0;
+  background-color: #0d1321; /* Dark rich background */
+  color: white;
+  min-height: 100vh;
+  /* Removed restrictive width margins from old styling */
+}
+
+/* Base resets */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
