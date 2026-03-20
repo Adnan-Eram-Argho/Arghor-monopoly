@@ -22,7 +22,7 @@ export const INITIAL_BOARD: Tile[] = [
   createTile(2, 'Public Fund', 'PUBLIC_FUND'),
   createProperty(3, 'Lalbagh', 'BROWN', 1200, 50, '#8B4513', 500, [200, 600, 1200, 1800, 2500]),
   createTile(4, 'Income Tax', 'TAX'),
-  createTile(5, 'Bangladesh\nRailway', 'STATION', 'STATION', 4000, 500),
+  createTile(5, 'Railway', 'STATION', 'STATION', 4000, 500),
   createProperty(6, 'Mirpur', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]), 
   createTile(7, 'Luck', 'LUCK'),
   createProperty(8, 'Mohammadpur', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]),
@@ -34,11 +34,11 @@ export const INITIAL_BOARD: Tile[] = [
   createTile(12, 'Electricity\nBoard', 'UTILITY', 'UTILITY', 3000), // Standardized price somewhat
   createProperty(13, 'Banani', 'PINK', 2500, 200, '#FF69B4', 1000, [600, 1800, 3500, 5000, 7000]),
   createProperty(14, 'Gulshan 1', 'PINK', 3000, 200, '#FF69B4', 1000, [600, 1800, 3500, 5000, 7000]),
-  createTile(15, 'Metro Rail\n(MRT Line-6)', 'STATION', 'STATION', 4000, 500),
+  createTile(15, 'Metro', 'STATION', 'STATION', 4000, 500),
   createProperty(16, 'Gulshan 2', 'ORANGE', 3500, 300, '#FFA500', 1500, [1000, 3000, 6000, 9000, 12000]), 
   createTile(17, 'Public Fund', 'PUBLIC_FUND'),
   createProperty(18, 'Baridhara', 'ORANGE', 3500, 300, '#FFA500', 1500, [1000, 3000, 6000, 9000, 12000]),
-  createProperty(19, 'Bashundhara\nR/A', 'ORANGE', 4000, 300, '#FFA500', 1500, [1000, 3000, 6000, 9000, 12000]),
+  createProperty(19, 'Bashundhara', 'ORANGE', 4000, 300, '#FFA500', 1500, [1000, 3000, 6000, 9000, 12000]),
   createTile(20, 'Public Holiday', 'CORNER'),
 
   // --- TOP ROW (21-30) ---
@@ -58,9 +58,9 @@ export const INITIAL_BOARD: Tile[] = [
   createProperty(32, 'Gazipur', 'GREEN', 6500, 700, '#008000', 3000, [2500, 7000, 14000, 20000, 25000]),
   createTile(33, 'Public Fund', 'PUBLIC_FUND'),
   createProperty(34, 'Savar', 'GREEN', 7000, 700, '#008000', 3000, [2500, 7000, 14000, 20000, 25000]),
-  createTile(35, 'Hazrat Shahjalal\nAirport', 'STATION', 'STATION', 4000, 500),
+  createTile(35, 'Airport', 'STATION', 'STATION', 4000, 500),
   createTile(36, 'Luck', 'LUCK'),
   createProperty(37, 'Padma Bridge\n🌉', 'DARK_BLUE', 8000, 1000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
   createTile(38, 'VAT', 'TAX'),
-  createProperty(39, 'Purbachal', 'DARK_BLUE', 10000, 1000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
+  createProperty(39, 'Bogura', 'DARK_BLUE', 10000, 1000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
 ];

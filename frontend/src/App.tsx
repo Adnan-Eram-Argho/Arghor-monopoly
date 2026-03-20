@@ -147,7 +147,7 @@ function App() {
 
   return (
     <>
-      <div className="h-[100dvh] w-full bg-mesh-gradient p-1 md:p-6 lg:p-8 flex flex-row gap-2 md:gap-8 justify-center items-center xl:items-start tracking-wide relative overflow-hidden">
+      <div className="min-h-[100dvh] bg-mesh-gradient p-1 sm:p-2 md:p-6 lg:p-8 flex flex-col xl:flex-row gap-4 md:gap-8 justify-center items-center xl:items-start tracking-wide relative">
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
         {/* Modals */}
@@ -158,12 +158,12 @@ function App() {
         </div>
 
         {/* LEFT: THE BOARD */}
-        <div className="w-3/5 md:w-2/3 xl:w-3/4 flex justify-center items-center max-h-full">
+        <div className="w-full xl:w-2/3 2xl:w-3/4 flex justify-center items-center">
           <Board room={room} onTileClick={(id: number) => setSelectedTileId(id)} />
         </div>
 
         {/* RIGHT: CONTROL PANEL */}
-        <div className="w-2/5 md:w-1/3 xl:w-1/4 glass-panel p-2 sm:p-5 md:p-6 rounded-xl md:rounded-3xl text-white flex flex-col gap-3 md:gap-5 flex-1 h-[98%] xl:max-h-[900px] overflow-y-auto max-w-[900px] z-10 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+        <div className="w-full xl:w-1/3 2xl:w-1/4 glass-panel p-4 sm:p-5 md:p-6 rounded-3xl text-white flex flex-col gap-5 flex-1 max-h-none xl:h-[85vh] xl:max-h-[900px] overflow-y-auto max-w-[900px] mx-auto xl:mx-0 z-10 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
 
           <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center shadow-inner relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent pointer-events-none"></div>
@@ -231,18 +231,18 @@ function App() {
             </div>
           </div>
 
-          {/* Quick Actions */}
-        <div className="flex flex-col xl:flex-row gap-2 xl:gap-4 mt-auto">
-            <button onClick={() => { playPop(); setIsTradeModalOpen(true); }} className="flex-1 text-xs md:text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-3 md:p-4 rounded-lg md:rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-1 md:gap-2">
-              <span>🤝</span> <span className="hidden sm:inline">Trade</span>
+        {/* Quick Actions */}
+        <div className="flex gap-4 mt-auto">
+            <button onClick={() => { playPop(); setIsTradeModalOpen(true); }} className="flex-1 text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
+              <span>🤝</span> Trade
             </button>
             <button onClick={() => {
               if (window.confirm("Are you sure you want to declare bankruptcy? This will eliminate you from the game!")) {
                 playNegative();
                 socket?.emit('declare_bankruptcy', room.id);
               } else playPop();
-            }} className="flex-1 text-xs md:text-sm bg-red-900/50 hover:bg-red-800 border border-red-800/50 hover:border-red-500 p-3 md:p-4 rounded-lg md:rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg text-red-100 flex items-center justify-center gap-1 md:gap-2">
-              <span>☠️</span> <span className="hidden sm:inline">Give Up</span>
+            }} className="flex-1 text-sm bg-red-900/50 hover:bg-red-800 border border-red-800/50 hover:border-red-500 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg text-red-100 flex items-center justify-center gap-2">
+              <span>☠️</span> Give Up
             </button>
           </div>
         </div>

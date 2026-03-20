@@ -23,8 +23,8 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere, allPlayers }) => {
   let layoutClass = 'flex flex-col';
   let barClass = 'h-1/4 w-full border-b-2 border-[#090909]';
   let textContainerClass = 'flex-1 flex flex-col items-center justify-center overflow-hidden w-full h-full p-0.5';
-  let titleClass = 'text-[7px] md:text-[9px] leading-tight font-black text-center uppercase text-slate-900 w-full px-0.5 break-words whitespace-pre-line tracking-tighter';
-  let priceClass = 'text-[7px] md:text-[9px] font-bold text-slate-800 mt-[1px] whitespace-nowrap bg-white/50 px-1 rounded-sm shadow-sm';
+  let titleClass = 'text-[4.5px] sm:text-[6px] md:text-[8px] lg:text-[9px] leading-[1.1] font-black text-center uppercase text-slate-900 w-full px-0.5 break-words whitespace-pre-wrap tracking-tighter';
+  let priceClass = 'text-[5px] sm:text-[6.5px] md:text-[8px] lg:text-[9px] font-bold text-slate-800 mt-[1px] whitespace-nowrap bg-white/50 px-[2px] rounded-sm shadow-sm';
   let innerTransform = '';
 
   // Helper flags to render Name/Price differently for Left/Right edges
@@ -54,7 +54,7 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere, allPlayers }) => {
     if (tile.id === 10) innerTransform = 'rotate-90';
     if (tile.id === 20) innerTransform = 'rotate-180';
     if (tile.id === 30) innerTransform = '-rotate-90';
-    titleClass = 'text-[8px] md:text-[10px] leading-tight font-black text-center uppercase text-slate-900 px-1 break-words';
+    titleClass = 'text-[5.5px] sm:text-[7px] md:text-[9px] lg:text-[10px] leading-tight font-black text-center uppercase text-slate-900 px-0.5 break-words';
     textContainerClass = 'flex-1 flex flex-col items-center justify-center p-1 overflow-hidden w-full h-full';
   } else {
     // BOTTOM
@@ -76,10 +76,10 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere, allPlayers }) => {
             {tile.houses !== undefined && tile.houses > 0 && (
               <div className={`absolute flex ${orientation === 'LEFT' || orientation === 'RIGHT' ? 'flex-col' : 'flex-row'} items-center justify-center gap-[1px] md:gap-1 z-10`}>
                 {tile.houses === 5 ? (
-                  <div className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 bg-red-600 shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_2px_rgba(255,255,255,0.4)] border border-black rounded-sm" title="Hotel" />
+                  <div className="w-[6px] h-[6px] sm:w-2 sm:h-2 md:w-3.5 md:h-3.5 bg-red-600 shadow-[0_2px_4px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-black rounded-[1px]" title="Hotel" />
                 ) : (
                   Array.from({ length: tile.houses }).map((_, i) => (
-                     <div key={i} className="w-2 h-2 md:w-2.5 md:h-2.5 bg-green-500 shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_2px_rgba(255,255,255,0.4)] border border-black rounded-[1px]" title="House" />
+                     <div key={i} className="w-[5px] h-[5px] sm:w-[6px] sm:h-[6px] md:w-2.5 md:h-2.5 bg-green-500 shadow-[0_2px_4px_rgba(0,0,0,0.6),inset_0_1px_2px_rgba(255,255,255,0.4)] border border-black rounded-[0.5px]" title="House" />
                   ))
                 )}
               </div>
@@ -89,7 +89,7 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere, allPlayers }) => {
 
         {isMortgaged && (
           <div className="absolute inset-0 bg-red-900/60 z-20 flex items-center justify-center backdrop-blur-[2px]">
-             <span className={`text-red-400 font-black text-[0.6rem] md:text-xs tracking-widest uppercase border-y-2 border-red-500 bg-black/95 px-2 py-1 shadow-[0_0_20px_rgba(220,38,38,0.8)] ${orientation === 'LEFT' ? 'rotate-90' : orientation === 'RIGHT' ? '-rotate-90' : ''}`}>MORTGAGED</span>
+             <span className={`text-red-400 font-black text-[4.5px] sm:text-[6px] md:text-[10px] tracking-widest uppercase border-y-[0.5px] border-red-500 bg-black/95 px-1 py-0.5 shadow-[0_0_10px_rgba(220,38,38,0.8)] ${orientation === 'LEFT' ? 'rotate-90' : orientation === 'RIGHT' ? '-rotate-90' : ''}`}>MORTGAGED</span>
           </div>
         )}
 
@@ -120,13 +120,13 @@ const Tile: React.FC<TileProps> = ({ tile, playersHere, allPlayers }) => {
       </div>
 
       {/* Players */}
-      <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-[2px] md:gap-1.5 p-1 pointer-events-none z-30">
+      <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-[1px] md:gap-1.5 p-[1px] md:p-1 pointer-events-none z-30">
         {playersHere.map(p => (
           <motion.div 
             layoutId={`token-${p.id}`}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
             key={p.id} 
-            className="w-3.5 h-3.5 md:w-5 md:h-5 rounded-full border-[1.5px] border-white/90 shadow-[0_4px_8px_rgba(0,0,0,0.8),inset_0_2px_4px_rgba(255,255,255,0.6)]"
+            className="w-[6px] h-[6px] sm:w-[9px] sm:h-[9px] md:w-4 md:h-4 lg:w-5 lg:h-5 rounded-full border-[1px] border-white/90 shadow-[0_4px_8px_rgba(0,0,0,0.8),inset_0_2px_4px_rgba(255,255,255,0.6)]"
             style={{ backgroundColor: getPlayerColor(p.id, allPlayers) }}
             title={p.name}
           />
