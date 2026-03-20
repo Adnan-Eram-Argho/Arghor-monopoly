@@ -11,15 +11,6 @@ function App() {
   const [name, setName] = useState('');
   const [roomIdInput, setRoomIdInput] = useState('');
 
-  // Landscape Enforcement Overlay
-  const LandscapeOverlay = (
-    <div className="portrait:flex hidden md:portrait:hidden fixed inset-0 z-[100000] bg-[#0d1321]/95 backdrop-blur-md flex-col items-center justify-center text-center p-8">
-      <div className="text-7xl md:text-8xl mb-8 animate-[pulse_2s_ease-in-out_infinite] rotate-90 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">📱</div>
-      <h2 className="text-3xl font-black mb-4 uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 drop-shadow-sm">Rotate Device</h2>
-      <p className="text-slate-300 font-medium leading-relaxed max-w-xs md:max-w-sm uppercase text-sm tracking-wider">Bangladesh Monopoly requires landscape mode for the best experience.</p>
-    </div>
-  );
-
   // UI State
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   const toggleMute = () => {
@@ -52,7 +43,6 @@ function App() {
   if (!room) {
     return (
       <div className="min-h-screen bg-mesh-gradient flex flex-col items-center justify-center text-white p-4 text-center font-sans relative overflow-hidden">
-        {LandscapeOverlay}
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
         <div className="glass-panel p-8 md:p-12 rounded-3xl z-10 w-full max-w-md flex flex-col gap-6">
           <h1 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-600 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] leading-tight">
@@ -108,7 +98,6 @@ function App() {
   if (!room.isStarted) {
     return (
       <div className="min-h-screen bg-mesh-gradient flex flex-col items-center justify-center text-white p-4 text-center font-sans relative overflow-hidden">
-        {LandscapeOverlay}
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
         <div className="glass-panel p-8 md:p-10 rounded-3xl z-10 w-full max-w-md flex flex-col items-center shadow-2xl">
           <div className="bg-black/40 px-6 py-3 rounded-full border border-white/10 mb-8 inline-block shadow-inner">
@@ -158,8 +147,7 @@ function App() {
 
   return (
     <>
-      <div className="min-h-[100dvh] bg-mesh-gradient p-1 sm:p-2 md:p-6 lg:p-8 flex flex-col xl:flex-row gap-4 md:gap-8 justify-center items-center xl:items-start tracking-wide relative">
-        {LandscapeOverlay}
+      <div className="h-[100dvh] w-full bg-mesh-gradient p-1 md:p-6 lg:p-8 flex flex-row gap-2 md:gap-8 justify-center items-center xl:items-start tracking-wide relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
 
         {/* Modals */}
@@ -170,12 +158,12 @@ function App() {
         </div>
 
         {/* LEFT: THE BOARD */}
-        <div className="w-full xl:w-2/3 2xl:w-3/4 flex justify-center items-center">
+        <div className="w-3/5 md:w-2/3 xl:w-3/4 flex justify-center items-center max-h-full">
           <Board room={room} onTileClick={(id: number) => setSelectedTileId(id)} />
         </div>
 
         {/* RIGHT: CONTROL PANEL */}
-        <div className="w-full xl:w-1/3 2xl:w-1/4 glass-panel p-4 sm:p-5 md:p-6 rounded-3xl text-white flex flex-col gap-5 flex-1 max-h-none xl:h-[85vh] xl:max-h-[900px] overflow-y-auto max-w-[900px] mx-auto xl:mx-0 z-10 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+        <div className="w-2/5 md:w-1/3 xl:w-1/4 glass-panel p-2 sm:p-5 md:p-6 rounded-xl md:rounded-3xl text-white flex flex-col gap-3 md:gap-5 flex-1 h-[98%] xl:max-h-[900px] overflow-y-auto max-w-[900px] z-10 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
 
           <div className="bg-white/5 border border-white/10 p-5 rounded-2xl flex justify-between items-center shadow-inner relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent pointer-events-none"></div>
@@ -244,17 +232,17 @@ function App() {
           </div>
 
           {/* Quick Actions */}
-          <div className="flex gap-4">
-            <button onClick={() => { playPop(); setIsTradeModalOpen(true); }} className="flex-1 text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2">
-              <span>🤝</span> Trade
+        <div className="flex flex-col xl:flex-row gap-2 xl:gap-4 mt-auto">
+            <button onClick={() => { playPop(); setIsTradeModalOpen(true); }} className="flex-1 text-xs md:text-sm bg-blue-600/50 hover:bg-blue-600 border border-blue-500/50 hover:border-blue-400 p-3 md:p-4 rounded-lg md:rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-1 md:gap-2">
+              <span>🤝</span> <span className="hidden sm:inline">Trade</span>
             </button>
             <button onClick={() => {
               if (window.confirm("Are you sure you want to declare bankruptcy? This will eliminate you from the game!")) {
                 playNegative();
                 socket?.emit('declare_bankruptcy', room.id);
               } else playPop();
-            }} className="flex-1 text-sm bg-red-900/50 hover:bg-red-800 border border-red-800/50 hover:border-red-500 p-4 rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg text-red-100 flex items-center justify-center gap-2">
-              <span>☠️</span> Give Up
+            }} className="flex-1 text-xs md:text-sm bg-red-900/50 hover:bg-red-800 border border-red-800/50 hover:border-red-500 p-3 md:p-4 rounded-lg md:rounded-xl font-bold uppercase tracking-wider transition-all shadow-lg text-red-100 flex items-center justify-center gap-1 md:gap-2">
+              <span>☠️</span> <span className="hidden sm:inline">Give Up</span>
             </button>
           </div>
         </div>
