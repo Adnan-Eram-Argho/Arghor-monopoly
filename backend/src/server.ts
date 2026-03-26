@@ -232,7 +232,7 @@ io.on("connection", (socket: Socket) => {
   socket.on('create_room', (playerName: string) => {
     const roomId = generateRoomCode();
     const hostPlayer: Player = {
-      id: socket.id, name: playerName, position: 0, money: 20000,
+      id: socket.id, name: playerName, position: 0, money: 40000,
       properties: [], inJail: false, jailTurns: 0, consecutiveDoubles: 0, isBankrupt: false, getOutOfJailCards: 0
     };
     const newRoom: RoomState = {
@@ -254,7 +254,7 @@ io.on("connection", (socket: Socket) => {
     if (room.players.length >= 4) return socket.emit('error_message', 'Room is full.');
 
     const newPlayer: Player = {
-      id: socket.id, name: data.playerName, position: 0, money: 20000,
+      id: socket.id, name: data.playerName, position: 0, money: 40000,
       properties: [], inJail: false, jailTurns: 0, consecutiveDoubles: 0, isBankrupt: false, getOutOfJailCards: 0
     };
     room.players.push(newPlayer);
