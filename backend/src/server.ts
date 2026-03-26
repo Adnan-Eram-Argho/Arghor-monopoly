@@ -301,15 +301,9 @@ io.on("connection", (socket: Socket) => {
          player.jailTurns = 0;
          room.logs.push(`${player.name} rolled a double and escaped Jail!`);
        } else if (player.jailTurns >= 3) {
-         if (player.money >= 500) {
-           player.money -= 500;
-           player.inJail = false;
-           player.jailTurns = 0;
-           room.logs.push(`${player.name} paid 500 BDT to get out of Karagar after 3 turns.`);
-         } else {
-           socket.emit('error_message', 'You cannot afford to leave Karagar (500 BDT). You must sell/trade or declare bankruptcy.');
-           return;
-         }
+         player.inJail = false;
+         player.jailTurns = 0;
+         room.logs.push(`${player.name} got out of Karagar for free after waiting 3 turns!`);
        } else {
          room.logs.push(`${player.name} is in jail and rolled ${d1}+${d2}.`);
          room.hasRolled = true; // Turn ends
@@ -442,6 +436,47 @@ io.on("connection", (socket: Socket) => {
       io.to(data.roomId).emit('game_update', room);
     } else {
       socket.emit('error_message', 'Not enough money to unmortgage!');
+    }
+  });
+
+  // --- ESCAPE JAIL OPTIONS ---
+  socket.on('pay_jail_fine', (roomId: string) => {
+    const room = rooms.get(roomId);
+    if (!room) return;
+    const playerIndex = room.players.findIndex(p => p.id === socket.id);
+    if (playerIndex !== room.currentTurnIndex) return;
+
+    const player = room.players[playerIndex];
+    if (!player.inJail) return;
+
+    if (player.money >= 500) {
+      player.money -= 500;
+      player.inJail = false;
+      player.jailTurns = 0;
+      room.logs.push(`${player.name} paid 500 ৳ to get out of Karagar.`);
+      io.to(roomId).emit('game_update', room);
+    } else {
+      socket.emit('error_message', 'Not enough money to pay the jail fine.');
+    }
+  });
+
+  socket.on('use_jail_card', (roomId: string) => {
+    const room = rooms.get(roomId);
+    if (!room) return;
+    const playerIndex = room.players.findIndex(p => p.id === socket.id);
+    if (playerIndex !== room.currentTurnIndex) return;
+
+    const player = room.players[playerIndex];
+    if (!player.inJail) return;
+
+    if (player.getOutOfJailCards > 0) {
+      player.getOutOfJailCards -= 1;
+      player.inJail = false;
+      player.jailTurns = 0;
+      room.logs.push(`${player.name} used a Get Out of Jail ticket!`);
+      io.to(roomId).emit('game_update', room);
+    } else {
+      socket.emit('error_message', 'You do not have any Get Out of Jail tickets.');
     }
   });
 

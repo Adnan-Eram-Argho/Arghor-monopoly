@@ -7,7 +7,7 @@ import PropertyManager from './components/PropertyManager';
 import { playPop, playDiceRoll, playCash, playNegative, playTurnStart, setMuted } from './utils/soundUtils';
 
 function App() {
-  const { room, player, createRoom, joinRoom, startGame, rollDice, buyProperty, endTurn, socket } = useSocket();
+  const { room, player, createRoom, joinRoom, startGame, rollDice, buyProperty, endTurn, payJailFine, useJailCard, socket } = useSocket();
   const [name, setName] = useState('');
   const [roomIdInput, setRoomIdInput] = useState('');
 
@@ -192,6 +192,29 @@ function App() {
           {/* Actions */}
           {isMyTurn && (
             <div className="bg-black/30 border border-white/5 p-5 rounded-2xl flex flex-col gap-4 shadow-inner">
+              {currentPlayer.inJail && !room.hasRolled && (
+                <div className="flex flex-col gap-3 mb-2 p-3 bg-red-900/20 border border-red-500/30 rounded-xl">
+                  <p className="text-center text-red-300 font-bold text-sm uppercase tracking-wider mb-1">
+                    🔒 IN KARAGAR 🔒
+                  </p>
+                  <button
+                    onClick={() => { playCash(); payJailFine(); }}
+                    className={`bg-green-600/80 hover:bg-green-600 text-white px-4 py-3 rounded-lg font-bold text-base shadow-lg transition-all ${currentPlayer.money < 500 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={currentPlayer.money < 500}
+                    title={currentPlayer.money < 500 ? "Not enough money (need 500 ৳)" : "Pay 500 ৳ to escape"}
+                  >
+                    💸 PAY 500 ৳ TO ESCAPE
+                  </button>
+                  {currentPlayer.getOutOfJailCards > 0 && (
+                    <button
+                      onClick={() => { playPop(); useJailCard(); }}
+                      className="bg-purple-600/80 hover:bg-purple-600 text-white px-4 py-3 rounded-lg font-bold text-base shadow-lg transition-all"
+                    >
+                      🎟️ USE JAIL TICKET
+                    </button>
+                  )}
+                </div>
+              )}
               {!room.hasRolled && (
                 <button
                   onClick={() => { 

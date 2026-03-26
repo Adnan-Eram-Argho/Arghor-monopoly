@@ -13,6 +13,8 @@ interface SocketContextProps {
   rollDice: () => void;
   buyProperty: () => void;
   endTurn: () => void;
+  payJailFine: () => void;
+  useJailCard: () => void;
 }
 
 const SocketContext = createContext<SocketContextProps | null>(null);
@@ -92,6 +94,14 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (room) socketRef.current?.emit('end_turn', room.id);
   };
 
+  const payJailFine = () => {
+    if (room) socketRef.current?.emit('pay_jail_fine', room.id);
+  };
+
+  const useJailCard = () => {
+    if (room) socketRef.current?.emit('use_jail_card', room.id);
+  };
+
   return (
     <SocketContext.Provider value={{ 
       socket: socketRef.current, 
@@ -102,7 +112,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       startGame, 
       rollDice, 
       buyProperty, 
-      endTurn 
+      endTurn,
+      payJailFine,
+      useJailCard
     }}>
       {children}
     </SocketContext.Provider>
