@@ -18,15 +18,15 @@ const createTile = (id: number, name: string, type: Tile['type'], group: Tile['g
 export const INITIAL_BOARD: Tile[] = [
   // --- BOTTOM ROW (0-10) ---
   createTile(0, 'Start', 'CORNER'),
-  createProperty(1, 'Old Dhaka 🚲', 'BROWN', 1000, 50, '#8B4513', 500, [200, 600, 1200, 1800, 2500]), 
+  createProperty(1, 'Lama Bajar 🚲', 'BROWN', 1000, 50, '#8B4513', 500, [200, 600, 1200, 1800, 2500]), 
   createTile(2, 'Public Fund', 'PUBLIC_FUND'),
-  createProperty(3, 'Lalbagh', 'BROWN', 1200, 50, '#8B4513', 500, [200, 600, 1200, 1800, 2500]),
+  createProperty(3, 'Mira bajar', 'BROWN', 1200, 50, '#8B4513', 500, [200, 600, 1200, 1800, 2500]),
   createTile(4, 'Income Tax', 'TAX'),
-  createTile(5, 'Railway', 'STATION', 'STATION', 4000, 500),
-  createProperty(6, 'Mirpur', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]), 
+  createTile(5, 'Shylet Station', 'STATION', 'STATION', 4000, 500),
+  createProperty(6, 'Ambar Khana', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]), 
   createTile(7, 'Luck', 'LUCK'),
-  createProperty(8, 'Mohammadpur', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]),
-  createProperty(9, 'Uttara', 'LIGHT_BLUE', 2000, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]),
+  createProperty(8, 'Zinda Bajar', 'LIGHT_BLUE', 1500, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]),
+  createProperty(9, 'Bandar Bajar', 'LIGHT_BLUE', 2000, 100, '#87CEEB', 700, [300, 900, 1800, 2500, 3500]),
   createTile(10, 'Karagar / Just Visiting', 'CORNER'),
 
   // --- LEFT COLUMN (11-20) ---
@@ -62,5 +62,5 @@ export const INITIAL_BOARD: Tile[] = [
   createTile(36, 'Luck', 'LUCK'),
   createProperty(37, 'Padma Bridge\n🌉', 'DARK_BLUE', 8000, 1000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
   createTile(38, 'VAT', 'TAX'),
-  createProperty(39, 'Bogura', 'DARK_BLUE', 10000, 1000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
+  createProperty(39, 'Bogura', 'DARK_BLUE', 10000, 2000, '#0000FF', 4000, [4000, 10000, 20000, 30000, 40000]), 
 ];

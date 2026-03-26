@@ -17,7 +17,7 @@ export const calculateNewPosition = (currentPos: number, steps: number): { posit
 };
 
 export const calculateRent = (tile: Tile, board: Tile[], steps: number): number => {
-  if (!tile.rent || !tile.owner) return 0;
+  if (!tile.owner) return 0;
   
   if (tile.isMortgaged) return 0;
 
@@ -45,11 +45,11 @@ export const calculateRent = (tile: Tile, board: Tile[], steps: number): number 
     const ownsAll = propertyGroup.every(t => t.owner === tile.owner);
     
     if (ownsAll && tile.houses === 0) {
-      return tile.rent * 2;
+      return (tile.rent || 0) * 2;
     }
   }
 
-  return tile.rent;
+  return tile.rent || 0;
 };
 
 // 4. Execute Card Action

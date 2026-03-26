@@ -25,7 +25,7 @@ const generateRoomCode = (): string => Math.random().toString(36).substring(2, 6
 
 io.on("connection", (socket: Socket) => {
 
-  // --- ADD THESE INSIDE io.on("connection") ---
+
 
   // --- MORTGAGE PROPERTY ---
   socket.on('mortgage_property', (data: { roomId: string; tileId: number }) => {
@@ -286,6 +286,10 @@ io.on("connection", (socket: Socket) => {
     }
 
     const player = room.players[playerIndex];
+    if (player.money < 0) {
+      socket.emit('error_message', 'You have a negative balance! You must settle your debts or declare bankruptcy before rolling.');
+      return;
+    }
     const [d1, d2] = rollDice();
     const isDouble = d1 === d2;
     const steps = d1 + d2;
@@ -451,6 +455,12 @@ io.on("connection", (socket: Socket) => {
     
     if (!room.hasRolled) {
       socket.emit('error_message', 'You must roll the dice first!');
+      return;
+    }
+
+    const player = room.players[playerIndex];
+    if (player.money < 0) {
+      socket.emit('error_message', 'You have a negative balance! Mortgage properties, trade, or declare bankruptcy to end your turn.');
       return;
     }
 

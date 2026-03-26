@@ -194,8 +194,17 @@ function App() {
             <div className="bg-black/30 border border-white/5 p-5 rounded-2xl flex flex-col gap-4 shadow-inner">
               {!room.hasRolled && (
                 <button
-                  onClick={() => { playDiceRoll(); rollDice(); }}
-                  className="glow-btn-blue text-white px-6 py-4 rounded-xl font-bold w-full text-xl shadow-lg uppercase tracking-wider flex items-center justify-center gap-3">
+                  onClick={() => { 
+                    if (currentPlayer.money < 0) {
+                      alert("You have a negative balance! Settle debts or declare bankruptcy before rolling.");
+                      return;
+                    }
+                    playDiceRoll(); 
+                    rollDice(); 
+                  }}
+                  className={`glow-btn-blue text-white px-6 py-4 rounded-xl font-bold w-full text-xl shadow-lg uppercase tracking-wider flex items-center justify-center gap-3 ${currentPlayer.money < 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  title={currentPlayer.money < 0 ? "You have a negative balance!" : ""}
+                >
                   <span className="text-2xl">🎲</span> ROLL DICE
                 </button>
               )}
@@ -208,10 +217,27 @@ function App() {
               )}
               {room.hasRolled && (
                 <button
-                  onClick={() => { playPop(); endTurn(); }}
-                  className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-4 rounded-xl font-bold w-full transition-all shadow-lg uppercase tracking-wider flex items-center justify-center gap-2">
+                  onClick={() => { 
+                    if (currentPlayer.money < 0) {
+                      alert("You have a negative balance! Mortgage properties, trade, or declare bankruptcy.");
+                      return;
+                    }
+                    playPop(); 
+                    endTurn(); 
+                  }}
+                  className={`bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-4 rounded-xl font-bold w-full transition-all shadow-lg uppercase tracking-wider flex items-center justify-center gap-2 ${currentPlayer.money < 0 ? 'opacity-50 cursor-not-allowed border-red-500/50 text-red-200' : ''}`}
+                  title={currentPlayer.money < 0 ? "You must settle your debts before ending turn!" : ""}
+                >
                   END TURN ➡️
                 </button>
+              )}
+              {currentPlayer.money < 0 && (
+                <div className="bg-red-900/40 border border-red-500/50 p-3 rounded-xl text-center text-red-200 text-sm font-bold uppercase tracking-wider shadow-[0_0_15px_rgba(220,38,38,0.3)] animate-pulse mt-2">
+                  ⚠️ Negative Balance!
+                  <div className="text-xs text-red-300 font-medium mt-1 normal-case tracking-normal">
+                    Mortgage, trade, or declare bankruptcy to continue.
+                  </div>
+                </div>
               )}
             </div>
           )}
